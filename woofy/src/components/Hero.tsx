@@ -11,7 +11,7 @@ const Hero: React.FC = () => {
     <section className="relative h-screen w-full overflow-hidden">
       {/* 1) Full-screen background image */}
       <img
-        src="../assets/icons/hero.jpg"
+        src="/assets/icons/hero.jpg"
         alt="Hero background"
         className="absolute inset-0 h-full w-full object-cover"
       />

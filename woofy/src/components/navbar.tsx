@@ -92,7 +92,7 @@ const Navbar: React.FC = () => {
         <div className="flex justify-end">
           <Link to="/cart" className="inline-block">
             <img
-              src="/assets/icons/cart.png"
+              src="/assets/icons/basket.png"
               alt="Panier"
               className="h-6 w-6 object-contain hover:opacity-80 transition"
             />

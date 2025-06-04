@@ -45,22 +45,22 @@ const Navbar: React.FC = () => {
         <div className="flex space-x-4">
           <SocialLink
             href="https://facebook.com"
-            src="/assets/icons/facebook.png"
+            src="../assets/icons/facebook.png"
             alt="Facebook"
           />
           <SocialLink
             href="https://instagram.com"
-            src="/assets/icons/instagram.png"
+            src="../assets/icons/instagram.png"
             alt="Instagram"
           />
           <SocialLink
             href="https://pinterest.com"
-            src="/assets/icons/pinterest.png"
+            src="../assets/icons/pinterest.png"
             alt="Pinterest"
           />
           <SocialLink
             href="https://twitter.com"
-            src="/assets/icons/twitter.png"
+            src="../assets/icons/twitter.png"
             alt="Twitter"
           />
         </div>

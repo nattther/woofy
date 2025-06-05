@@ -2,9 +2,9 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App";
-import Navbar from "./components/navbar.tsx";
+import Footer from "./components/Footer";
 import { BrowserRouter as Router } from "react-router-dom";
-import Footer from "./components/Footer.tsx";
+import Navbar from "./components/navbar";
 
 const rootElement = document.getElementById("root")!;
 createRoot(rootElement).render(

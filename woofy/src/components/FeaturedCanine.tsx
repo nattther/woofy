@@ -27,6 +27,7 @@ const FeaturedCanine: React.FC = () => {
             imageSrc={product.featuredAsset?.preview ?? "/default-image.jpg"}
             title={product.name}
             price={`${(product.variants[0]?.priceWithTax / 100).toFixed(2)} €`}
+            slug={product.slug}
           />
         ))}
       </div>

@@ -1,15 +1,14 @@
+import React from "react";
+import { Routes, Route } from "react-router-dom";
 
-import FeaturedCanine from "./components/FeaturedCanine";
-import Hero from "./components/Hero";
+import ProductDetail from "./pages/ProductDetail";
+import Home from "./pages/home";
 
 const App: React.FC = () => (
-  <>
-    {/* Hero sits right below Navbar (which you already imported in main.tsx) */}
-    <Hero />
-    <FeaturedCanine />
-
-
-  </>
+  <Routes>
+    <Route path="/" element={<Home />} />
+    <Route path="/produit/:slug" element={<ProductDetail />} />
+  </Routes>
 );
 
 export default App;

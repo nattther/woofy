@@ -32,9 +32,12 @@ query GetProductBySlug($slug: String!) {
     variants {
       id
       priceWithTax
+      stockOnHand
     }
   }
 }
+
+
 
 
 

@@ -21,3 +21,9 @@ export interface ProductsResponse {
     items: Product[];
   };
 }
+
+export type ProductSort =
+  | "NAME_ASC"
+  | "NAME_DESC"
+  | "PRICE_ASC"
+  | "PRICE_DESC";

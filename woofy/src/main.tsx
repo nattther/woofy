@@ -5,14 +5,18 @@ import App from "./App";
 import Footer from "./components/Footer";
 import { BrowserRouter as Router } from "react-router-dom";
 import Navbar from "./components/navbar";
+import { CartProvider } from "./context/CartContext";
 
 const rootElement = document.getElementById("root")!;
 createRoot(rootElement).render(
   <StrictMode>
-    <Router>
-      <Navbar />
-      <App />
-      <Footer />
-    </Router>
+    <CartProvider>
+      <Router>
+        <Navbar />
+        <App />
+        <Footer />
+      </Router>
+    </CartProvider>
   </StrictMode>
 );
+

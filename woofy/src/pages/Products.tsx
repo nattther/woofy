@@ -3,7 +3,6 @@ import ProductFilterBar from "../components/ProductFilterBar";
 import ProductGrid from "../components/ProductGrid";
 import Pagination from "../components/Pagination";
 import { usePaginatedProducts } from "../hooks/usePaginatedProducts";
-import Navbar from "../components/navbar";
 import type { ProductSort } from "../type/product";
 
 const PRODUCTS_PER_PAGE = 8;

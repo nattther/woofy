@@ -45,22 +45,22 @@ const Navbar: React.FC = () => {
         <div className="flex space-x-4">
           <SocialLink
             href="https://facebook.com"
-            src="/assets/icons/facebook.png"
+            src="/icons/facebook.png"
             alt="Facebook"
           />
           <SocialLink
             href="https://instagram.com"
-            src="/assets/icons/instagram.png"
+            src="/icons/instagram.png"
             alt="Instagram"
           />
           <SocialLink
             href="https://pinterest.com"
-            src="/assets/icons/pinterest.png"
+            src="/icons/pinterest.png"
             alt="Pinterest"
           />
           <SocialLink
             href="https://twitter.com"
-            src="/assets/icons/twitter.png"
+            src="/icons/twitter.png"
             alt="Twitter"
           />
         </div>
@@ -70,7 +70,7 @@ const Navbar: React.FC = () => {
           {/* Round Woofy Logo */}
           <Link to="/">
             <img
-              src="/assets/icons/logo.png"
+              src="/icons/logo.png"
               alt="Woofy Logo"
               className="h-12 w-12 rounded-full object-cover"
             />
@@ -92,16 +92,10 @@ const Navbar: React.FC = () => {
         <div className="flex justify-end">
           <Link to="/cart" className="inline-block">
             <img
-              src="/assets/icons/basket.png"
+              src="/icons/basket.png"
               alt="Panier"
               className="h-6 w-6 object-contain hover:opacity-80 transition"
             />
-            {/* 
-              If you want a badge for item count, you can add:
-              <span className="absolute -top-1 -right-2 inline-flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-xs text-white">
-                {itemCount}
-              </span>
-            */}
           </Link>
         </div>
 

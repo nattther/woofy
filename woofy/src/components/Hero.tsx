@@ -1,29 +1,28 @@
+// src/components/Hero.tsx
 
 import React from "react";
 
-/**
- * @description Hero section with a full-screen background image and a dark overlay
- *              covering the bottom third, containing the headline text.
- * @returns A JSX element that fills the viewport height.
- */
 const Hero: React.FC = () => {
   return (
-    <section className="relative h-screen w-full overflow-hidden">
-      {/* 1) Full-screen background image */}
+    <section className="relative h-[80vh] w-full overflow-hidden">
+      {/* Image de fond (dans public/icons/hero.jpg) */}
       <img
-        src="/assets/icons/hero.jpg"
+        src="/icons/hero.jpg"
         alt="Hero background"
         className="absolute inset-0 h-full w-full object-cover"
       />
 
-      {/* 2) Dark overlay on bottom 1/3 */}
+      {/* Overlay sombre sur le bas 1/3 */}
       <div className="absolute bottom-0 w-full h-1/3 bg-black/60" />
 
-      {/* 3) Centered text inside the overlay */}
-      <div className="absolute bottom-0 w-full h-1/3 flex items-center justify-center px-4">
+      {/* Texte + bouton centré dans le bandereau sombre */}
+      <div className="absolute bottom-0 w-full h-1/3 flex flex-col items-center justify-center px-4 space-y-4">
         <h1 className="text-center text-white text-4xl sm:text-5xl font-semibold">
           Un cadeau pour votre meilleur ami
         </h1>
+        <button className="bg-[#89CFF0] text-white px-6 py-2 rounded-lg hover:bg-[#77bfe0] transition">
+          Achetez
+        </button>
       </div>
     </section>
   );

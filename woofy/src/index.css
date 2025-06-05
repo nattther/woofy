@@ -1,1 +1,11 @@
+/* 1) Import Noto Sans from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap');
+
+/* 2) Import all of Tailwind v4 */
 @import "tailwindcss";
+
+/* 3) Apply Noto Sans to entire document */
+html,
+body {
+  font-family: 'Noto Sans', sans-serif;
+}

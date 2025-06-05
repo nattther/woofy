@@ -1,59 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Header from "../components/navbar.tsx";
-import Footer from "../components/Footer.tsx";
-import { GraphQLClient, gql } from "graphql-request";
-
-interface Product {
-  id: string;
-  name: string;
-  slug: string;
-  description: string;
-  featuredAsset: { preview: string } | null;
-  variants: { priceWithTax: number; stockOnHand: number }[];
-}
-
-const fetchProductBySlug = async (
-  slug: string,
-): Promise<Product | null> => {
-  const endpoint = "http://localhost:3000/shop-api";
-  const client = new GraphQLClient(endpoint);
-
-  const query = gql`
-query GetProductBySlug($slug: String!) {
-  product(slug: $slug) {
-    id
-    name
-    slug
-    description
-    featuredAsset {
-      preview
-    }
-    variants {
-      id
-      priceWithTax
-      stockOnHand
-    }
-  }
-}
-
-
-
-
-
-  `;
-
-  try {
-    const data = await client.request<
-      { product: Product | null },
-      { slug: string;}
-    >(query, { slug});
-    return data.product;
-  } catch (error) {
-    console.error("Erreur lors de la requête GraphQL :", error);
-    return null;
-  }
-};
+import { fetchProductBySlug } from "../api/productApi";
+import type { Product } from "../type/product.ts";
 
 const ProductDetail: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -107,7 +55,6 @@ const ProductDetail: React.FC = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-[#F5F0E6] text-[#4A4A4A]">
-      <Header />
 
       <main className="flex-1 container mx-auto py-12 px-4">
         <div className="flex flex-col lg:flex-row gap-12">
@@ -206,8 +153,6 @@ const ProductDetail: React.FC = () => {
           </div>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 };

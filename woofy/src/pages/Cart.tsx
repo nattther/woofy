@@ -1,10 +1,10 @@
 import React from "react";
 import { useCart } from "../context/CartContext";
-
-import Footer from "../components/Footer";
+import { useNavigate } from "react-router-dom";
 
 const CartPage: React.FC = () => {
   const { cart, removeFromCart, getTotalPrice, updateQuantity } = useCart();
+    const navigate = useNavigate();
 
   return (
     <div className="flex flex-col min-h-screen bg-[#F5F0E6] text-[#4A4A4A]">
@@ -68,16 +68,16 @@ const CartPage: React.FC = () => {
               <span>Total :</span>
               <span>{(getTotalPrice() / 100).toFixed(2)} €</span>
             </div>
-            <button
-              className="w-full bg-green-500 text-white font-bold py-3 rounded-lg hover:bg-green-600 transition"
-              onClick={() => alert("Paiement à implémenter 😉")}
-            >
-              Payer
-            </button>
+<button
+  className="w-full bg-green-500 text-white font-bold py-3 rounded-lg hover:bg-green-600 transition"
+  onClick={() => navigate("/checkout")}
+>
+  Passer à la caisse
+</button>
+
           </>
         )}
       </main>
-      <Footer />
     </div>
   );
 };

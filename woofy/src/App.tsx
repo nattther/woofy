@@ -4,6 +4,7 @@ import ProductDetail from "./pages/ProductDetail";
 import Home from "./pages/home";
 import Products from "./pages/Products";
 import CartPage from "./pages/Cart";
+import Checkout from "./pages/Checkout";
 
 const App: React.FC = () => (
   <Routes>
@@ -11,6 +12,7 @@ const App: React.FC = () => (
     <Route path="/produit/:slug" element={<ProductDetail />} />
     <Route path="/products" element={<Products />} />
     <Route path="/cart" element={<CartPage />} />
+    <Route path="/checkout" element={<Checkout />} />
   </Routes>
 );
 

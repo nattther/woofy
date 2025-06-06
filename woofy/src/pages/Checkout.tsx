@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import { useCart } from "../context/CartContext";
 import Step1PersonalInfo from "../components/Step1PersonalInfo";
 import Step2Delivery from "../components/Step2Delivery";
@@ -15,6 +14,13 @@ const INITIAL_PERSONAL: CheckoutPersonalInfo = {
   phone: "",
 };
 
+const stepLabels = [
+  "Infos",
+  "Livraison",
+  "Paiement",
+  "Confirmation",
+];
+
 const Checkout: React.FC = () => {
   const { cart, getTotalPrice, clearCart } = useCart();
   const [step, setStep] = useState(1);
@@ -28,29 +34,41 @@ const Checkout: React.FC = () => {
   const goToNext = () => setStep((s) => s + 1);
   const goToPrev = () => setStep((s) => Math.max(1, s - 1));
 
-  // Montant total commande
+  // Montants
   const productsTotal = getTotalPrice() / 100;
   const shippingCost = delivery.shippingCost;
   const totalOrder = productsTotal + shippingCost;
 
-  // Reset cart et state à la confirmation
   const handleConfirmation = () => {
     clearCart();
   };
 
   return (
-    <div className="min-h-screen bg-[#F5F0E6] py-12 flex flex-col items-center">
-      <div className="w-full max-w-2xl bg-white shadow-lg rounded-xl p-8">
-        {/* Stepper simple */}
-        <div className="flex justify-between mb-8">
-          {["Infos", "Livraison", "Paiement", "Confirmation"].map((title, i) => (
-            <div
-              key={title}
-              className={`flex-1 text-center font-bold py-2 rounded 
-                ${step === i + 1 ? "bg-[#89CFF0] text-white" : "bg-gray-200 text-gray-700"}
-              `}
-            >
-              {i + 1}. {title}
+    <div className="min-h-screen bg-[#F5F0E6] py-10 flex flex-col items-center">
+      <div className="w-full max-w-2xl bg-white shadow-xl rounded-2xl p-8 border border-[#C1E1C1]">
+        {/* Stepper modernisé */}
+        <div className="flex items-center justify-between mb-8 px-2">
+          {stepLabels.map((title, i) => (
+            <div key={title} className="flex-1 flex flex-col items-center relative">
+              <div
+                className={`
+                  flex items-center justify-center w-8 h-8 rounded-full border-2
+                  ${step === i + 1
+                    ? "bg-[#89CFF0] border-[#89CFF0] text-white font-bold shadow"
+                    : step > i + 1
+                      ? "bg-[#C1E1C1] border-[#C1E1C1] text-[#4A4A4A]"
+                      : "bg-gray-100 border-[#C1E1C1] text-[#89CFF0]"}
+                  transition
+                `}
+              >
+                {i + 1}
+              </div>
+              <span className={`mt-2 text-xs font-semibold ${step === i + 1 ? "text-[#89CFF0]" : "text-[#4A4A4A]"}`}>
+                {title}
+              </span>
+              {i < stepLabels.length - 1 && (
+                <span className="absolute top-4 left-full w-1/2 h-px bg-[#C1E1C1]"></span>
+              )}
             </div>
           ))}
         </div>
@@ -74,9 +92,7 @@ const Checkout: React.FC = () => {
         {step === 3 && (
           <Step3Payment
             total={totalOrder}
-            onSuccess={() => {
-              goToNext();
-            }}
+            onSuccess={goToNext}
             onPrev={goToPrev}
           />
         )}

@@ -5,6 +5,7 @@ import Step2Delivery from "../components/Step2Delivery";
 import Step3Payment from "../components/Step3Payment";
 import Step4Confirmation from "../components/Step4Confirmation";
 import type { CheckoutPersonalInfo, DeliveryMethod } from "../type/checkout";
+import { useNavigate } from "react-router-dom";
 
 const INITIAL_PERSONAL: CheckoutPersonalInfo = {
   firstName: "",
@@ -33,7 +34,7 @@ const Checkout: React.FC = () => {
 
   const goToNext = () => setStep((s) => s + 1);
   const goToPrev = () => setStep((s) => Math.max(1, s - 1));
-
+  const navigate = useNavigate();
   // Montants
   const productsTotal = getTotalPrice() / 100;
   const shippingCost = delivery.shippingCost;
@@ -41,6 +42,7 @@ const Checkout: React.FC = () => {
 
   const handleConfirmation = () => {
     clearCart();
+    navigate("/"); 
   };
 
   return (

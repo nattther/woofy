@@ -1,5 +1,25 @@
 import { GraphQLClient, gql } from "graphql-request";
 import type { Product, ProductSort, ProductsResponse } from "../type/product";
+interface SearchResultItem {
+  productId: string;
+  productName: string;
+  slug: string;
+  productAsset?: {
+    preview: string;
+  };
+  priceWithTax?: {
+    value?: number;
+    min?: number;
+  };
+}
+
+interface SearchResponse {
+  search: {
+    items: SearchResultItem[];
+    totalItems: number;
+  };
+}
+
 
 const endpoint = "http://localhost:3000/shop-api";
 const client = new GraphQLClient(endpoint);
@@ -39,44 +59,89 @@ export async function fetchProductBySlug(slug: string): Promise<Product | null> 
   return data.product;
 }
 
-/**
- * Fetches paginated & sorted products.
- */
+
 export async function fetchPaginatedProducts(
   page: number,
   perPage: number,
   sort: ProductSort = "NAME_ASC"
 ): Promise<{ items: Product[]; totalItems: number }> {
-  // Vendure utilise 'skip' (offset) et 'take' (limit), et l'option 'sort'
-  let sortObj: Record<string, "ASC" | "DESC"> = {};
-  if (sort === "NAME_ASC") sortObj = { name: "ASC" };
-  if (sort === "NAME_DESC") sortObj = { name: "DESC" };
-  if (sort === "PRICE_ASC") sortObj = { price: "ASC" };
-  if (sort === "PRICE_DESC") sortObj = { price: "DESC" };
+  const sortMap: Record<ProductSort, { name?: 'ASC' | 'DESC'; price?: 'ASC' | 'DESC' }> = {
+    NAME_ASC: { name: 'ASC' },
+    NAME_DESC: { name: 'DESC' },
+    PRICE_ASC: { price: 'ASC' },
+    PRICE_DESC: { price: 'DESC' },
+  };
 
   const query = gql`
-    query GetPaginatedProducts($skip: Int!, $take: Int!, $sort: ProductSortParameter) {
-      products(options: { skip: $skip, take: $take, sort: $sort }) {
+    query SearchProducts($input: SearchInput!) {
+      search(input: $input) {
         items {
-          id
-          name
+          productId
+          productName
           slug
-          featuredAsset { preview }
-          variants { priceWithTax }
+          productAsset {
+            preview
+          }
+          priceWithTax {
+            ... on SinglePrice {
+              value
+            }
+            ... on PriceRange {
+              min
+              max
+            }
+          }
         }
         totalItems
       }
     }
   `;
+
   const variables = {
-    skip: (page - 1) * perPage,
-    take: perPage,
-    sort: sortObj,
+    input: {
+      take: perPage,
+      skip: (page - 1) * perPage,
+      sort: sortMap[sort],
+    },
   };
 
-  const data = await client.request<{
-    products: { items: Product[]; totalItems: number };
-  }>(query, variables);
+const data = await client.request<SearchResponse>(query, variables);
 
-  return data.products;
+  // Adapter les données reçues pour correspondre à votre type Product
+if (
+  typeof data === 'object' &&
+  data !== null &&
+  'search' in data &&
+  typeof data.search === 'object' &&
+  data.search !== null &&
+  'items' in data.search &&
+  Array.isArray(data.search.items)
+) {
+  const items: Product[] = data.search.items.map((item: SearchResultItem) => ({
+    id: item.productId,
+    name: item.productName,
+    slug: item.slug,
+    featuredAsset: {
+      preview: item.productAsset?.preview || "/default-image.jpg",
+    },
+    variants: [
+      {
+        priceWithTax:
+          item.priceWithTax?.value ??
+          item.priceWithTax?.min ??
+          0,
+      },
+    ],
+  }));
+
+  return {
+    items,
+    totalItems: data.search.totalItems,
+  };
+} else {
+  // Gérer le cas où la structure de 'data' n'est pas celle attendue
+  throw new Error("Structure de données inattendue");
+}
+
+
 }

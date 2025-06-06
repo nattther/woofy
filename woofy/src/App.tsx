@@ -5,6 +5,7 @@ import Home from "./pages/home";
 import Products from "./pages/Products";
 import CartPage from "./pages/Cart";
 import Checkout from "./pages/Checkout";
+import 'react-toastify/dist/ReactToastify.css';
 
 const App: React.FC = () => (
   <Routes>

@@ -23,22 +23,31 @@ export const useCart = (): CartContextType => {
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cart, setCart] = useState<Cart>({ items: [] });
+const addToCart = (product: Product, quantity: number) => {
+  setCart((prev: Cart) => {
+    const existingItem = prev.items.find((i: CartItem) => i.product.id === product.id);
+    const stock = product.variants[0]?.stockOnHand ?? 0;
+    const currentQty = existingItem?.quantity ?? 0;
+    const newQty = currentQty + quantity;
 
-  const addToCart = (product: Product, quantity: number) => {
-    setCart((prev: Cart) => {
-      const exist = prev.items.find((i: CartItem) => i.product.id === product.id);
-      if (exist) {
-        return {
-          items: prev.items.map((i: CartItem) =>
-            i.product.id === product.id
-              ? { ...i, quantity: i.quantity + quantity }
-              : i
-          ),
-        };
-      }
-      return { items: [...prev.items, { product, quantity }] };
-    });
-  };
+    if (newQty > stock) {
+      return prev;
+    }
+
+    if (existingItem) {
+      return {
+        items: prev.items.map((i: CartItem) =>
+          i.product.id === product.id
+            ? { ...i, quantity: newQty }
+            : i
+        ),
+      };
+    }
+
+    return { items: [...prev.items, { product, quantity }] };
+  });
+};
+
 
   const removeFromCart = (productId: string) => {
     setCart((prev: Cart) => ({

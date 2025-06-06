@@ -6,9 +6,7 @@ export interface Product {
   name: string;
   slug: string;
   description?: string;
-  featuredAsset: {
-    preview: string;
-  } | null;
+  featuredAsset?: { preview: string };
   variants: Array<{
     id?: string;
     priceWithTax: number;

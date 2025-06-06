@@ -45,32 +45,6 @@ const Hero: React.FC = () => {
         </motion.button>
       </motion.div>
 
-      {/* Scroll down indicator (animated) */}
-      <motion.div
-        className="absolute left-1/2 bottom-4 -translate-x-1/2 flex flex-col items-center"
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.5, duration: 0.8 }}
-        aria-hidden="true"
-      >
-        <span className="text-white text-sm mb-1 opacity-80">Scrollez</span>
-        <motion.div
-          className="w-6 h-6 border-2 border-white rounded-full flex items-center justify-center"
-          animate={{
-            y: [0, 10, 0],
-            opacity: [0.7, 1, 0.7],
-          }}
-          transition={{
-            duration: 1.5,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-            <path d="M12 7v10M12 17l-4-4m4 4l4-4" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
-          </svg>
-        </motion.div>
-      </motion.div>
     </section>
   );
 };

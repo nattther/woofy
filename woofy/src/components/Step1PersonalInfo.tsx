@@ -4,7 +4,7 @@ import type { CheckoutPersonalInfo } from "../type/checkout";
 interface Props {
   data: CheckoutPersonalInfo;
   onChange: (data: CheckoutPersonalInfo) => void;
-  onNext: () => void;
+  onNext: () => Promise<void>;
 }
 
 const inputClass =
@@ -12,6 +12,7 @@ const inputClass =
 
 const Step1PersonalInfo: React.FC<Props> = ({ data, onChange, onNext }) => {
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [loading, setLoading] = useState(false);
 
   const validate = (): boolean => {
     const errs: Record<string, string> = {};
@@ -24,9 +25,19 @@ const Step1PersonalInfo: React.FC<Props> = ({ data, onChange, onNext }) => {
     return Object.keys(errs).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (validate()) onNext();
+    if (validate()) {
+      setLoading(true);
+      try {
+        await onNext(); // attend la mutation API
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (err: any) {
+        // Optionnel: setErrors({ api: "Erreur serveur..." });
+        alert("Une erreur est survenue: " + (err?.message || "Inconnu"));
+      }
+      setLoading(false);
+    }
   };
 
   return (
@@ -80,8 +91,9 @@ const Step1PersonalInfo: React.FC<Props> = ({ data, onChange, onNext }) => {
       <button
         type="submit"
         className="bg-[#89CFF0] text-white font-bold rounded-lg py-2 mt-4 shadow hover:bg-[#77bfe0] transition"
+        disabled={loading}
       >
-        Continuer
+        {loading ? "Enregistrement..." : "Continuer"}
       </button>
     </form>
   );

@@ -213,7 +213,9 @@ const addToCartHandler = () => {
                     transition={{ duration: 0.3 }}
                     className="bg-white text-[#4A4A4A] px-4 py-3 border border-[#89CFF0] rounded-b-md overflow-hidden"
                   >
-                    {product.description}
+              <div
+                dangerouslySetInnerHTML={{ __html: product.description || "" }}
+              />
                   </motion.div>
                 )}
               </AnimatePresence>

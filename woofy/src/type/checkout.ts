@@ -6,7 +6,13 @@ export interface CheckoutPersonalInfo {
   phone: string;
 }
 
-export type DeliveryMethod = "STANDARD" | "FREE";
+export interface DeliveryMethod {
+  id: string;
+  name: string;
+  priceWithTax: number;
+  description?: string;
+}
+
 
 export interface CheckoutDelivery {
   method: DeliveryMethod;

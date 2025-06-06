@@ -7,25 +7,49 @@ interface PaginationProps {
 }
 
 const Pagination: React.FC<PaginationProps> = ({ page, pageCount, onPageChange }) => (
-  <div className="flex items-center justify-center gap-3">
+  <div className="flex items-center justify-center gap-5 mt-4">
     <button
       onClick={() => onPageChange(page - 1)}
       disabled={page === 1}
-      className="p-2 rounded-full hover:bg-gray-200 disabled:opacity-50"
+      className="p-3 rounded-full bg-white border border-[#89CFF0] shadow hover:bg-[#E3F4FD] disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-[#89CFF0] transition"
       aria-label="Précédent"
     >
-      <img src="/icons/arrow-left.png" alt="Précédent" className="h-6 w-6" />
+      {/* Flèche gauche */}
+      <svg
+        width="24"
+        height="24"
+        fill="none"
+        stroke="#89CFF0"
+        strokeWidth={3}
+        viewBox="0 0 24 24"
+        className="w-6 h-6"
+        aria-hidden="true"
+      >
+        <path d="M15 19l-7-7 7-7" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
     </button>
-    <span className="font-medium text-lg">
-      Page {page} sur {pageCount}
+    <span className="font-semibold text-lg tracking-wide">
+      Page {page} <span className="opacity-60 font-normal">/ {pageCount}</span>
     </span>
     <button
       onClick={() => onPageChange(page + 1)}
       disabled={page === pageCount}
-      className="p-2 rounded-full hover:bg-gray-200 disabled:opacity-50"
+      className="p-3 rounded-full bg-white border border-[#89CFF0] shadow hover:bg-[#E3F4FD] disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-[#89CFF0] transition"
       aria-label="Suivant"
     >
-      <img src="/icons/arrow-right.png" alt="Suivant" className="h-6 w-6" />
+      {/* Flèche droite */}
+      <svg
+        width="24"
+        height="24"
+        fill="none"
+        stroke="#89CFF0"
+        strokeWidth={3}
+        viewBox="0 0 24 24"
+        className="w-6 h-6"
+        aria-hidden="true"
+      >
+        <path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
     </button>
   </div>
 );

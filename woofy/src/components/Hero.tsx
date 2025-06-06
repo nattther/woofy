@@ -1,7 +1,14 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const Hero: React.FC = () => {
+  const navigate = useNavigate();
+
+  const handleBuyClick = () => {
+    navigate("/products");
+  };
+
   return (
     <section className="relative h-[80vh] w-full overflow-hidden">
       {/* Hero Background with zoom/scale animation */}
@@ -28,9 +35,11 @@ const Hero: React.FC = () => {
           Un cadeau pour votre meilleur ami
         </h1>
         <motion.button
+          onClick={handleBuyClick}
           className="bg-[#89CFF0] text-white px-8 py-3 rounded-xl shadow-lg hover:bg-[#77bfe0] transition text-lg font-bold"
           whileHover={{ scale: 1.07 }}
           whileTap={{ scale: 0.97 }}
+          aria-label="Aller à la page Produits"
         >
           Achetez
         </motion.button>

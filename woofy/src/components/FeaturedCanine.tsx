@@ -2,12 +2,14 @@ import React from "react";
 import ProductCard from "./ProductCard";
 import { useProducts } from "../api/useproduct";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 /**
  * @description Displays a featured canine section with 4 product cards fetched from Vendure.
  */
 const FeaturedCanine: React.FC = () => {
   const { products, loading, error } = useProducts(4);
+  const navigate = useNavigate();
 
   // Skeleton Loader Card
   const SkeletonCard = () => (
@@ -21,7 +23,7 @@ const FeaturedCanine: React.FC = () => {
   if (loading) {
     return (
       <section className="py-8" aria-live="polite">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
+        <h2 className="text-2xl font-semibold text-[#4A4A4A] mb-6 text-center">
           Nos stars des canins
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -41,10 +43,10 @@ const FeaturedCanine: React.FC = () => {
   }
 
   return (
-<section className="py-8 mt-10 mb-10 ">
-  <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
-    Nos stars des canins
-  </h2>
+    <section className="py-8 mt-10 mb-10">
+      <h2 className="text-2xl font-semibold text-[#4A4A4A] mb-6 text-center">
+        Nos stars des canins
+      </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         <AnimatePresence>
           {products.map((product, idx) => (
@@ -72,6 +74,7 @@ const FeaturedCanine: React.FC = () => {
       </div>
       <div className="flex justify-center mt-8">
         <button
+          onClick={() => navigate("/products")}
           className="flex items-center gap-2 bg-[#89CFF0] text-white px-8 py-3 rounded-xl shadow-lg hover:bg-[#77bfe0] active:scale-95 transition text-lg font-bold"
           aria-label="Voir plus de produits canins"
         >
